@@ -1,0 +1,15 @@
+name: diffragan
+channels:
+  - conda-forge
+dependencies:
+  - abtem=1.0.0b32
+  - ase=3.22.1
+  - matplotlib
+  - opencv
+  - scikit-image
+  - scikit-learn
+  - pillow
+  - imageio
+  - pdbfixer
+  - mdanalysis
+  - biopython
