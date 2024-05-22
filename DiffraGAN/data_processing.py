@@ -4,21 +4,16 @@ import numpy as np
 import cv2
 import tensorflow as tf
 
-def preprocess_image(file_path, is_target, target_size=(256, 256)):
+def preprocess_image(file_path, target_size=(256, 256)):
+    # This part is highly dependent on the data generated
     image = np.load(file_path)
-    if is_target:
-        padded_image = np.zeros((256, 256), dtype=image.dtype)
-        pad_top = (1024 - image.shape[0]) // 2
-        pad_left = (1024 - image.shape[1]) // 2
-        padded_image[pad_top:pad_top+image.shape[0], pad_left:pad_left+image.shape[1]] = image
-        image = padded_image
-    else:
-        #Interplote the image to the target size: INTER_LANCZOS4 for upscaling, INTER_AREA for downscaling
-        interpolation = cv2.INTER_LANCZOS4 if image.shape[0] < target_size[0] or image.shape[1] < target_size[1] else cv2.INTER_AREA
-        image = cv2.resize(image, target_size, interpolation=interpolation)
-        min_val = np.min(image)
-        max_val = np.max(image)
-        image = (image - min_val) * (65535.0 / (max_val - min_val)) 
+    image = image.astype(np.float32)
+    #Interplote the image to the target size: INTER_LANCZOS4 for upscaling, INTER_AREA for downscaling
+    interpolation = cv2.INTER_LANCZOS4 if image.shape[0] < target_size[0] or image.shape[1] < target_size[1] else cv2.INTER_AREA
+    image = cv2.resize(image, target_size, interpolation=interpolation)
+    min_val = np.min(image)
+    max_val = np.max(image)
+    image = (image - min_val) * (65535.0 / (max_val - min_val)) 
 
     # Normalize image based on the range of the data you have 
     image = (image - 32767.5) / 32767.5
@@ -54,9 +49,9 @@ def image_generator(src_folder1, src_folder2, target_folder1, batch_size):
             for i in range(0, num_files - batch_size, batch_size):  
                 batch_start = i
                 batch_end = min(i + batch_size, num_files)
-                src_batch1 = [preprocess_image(file, False) for file in src_files_shuffled1[batch_start:batch_end]]
-                src_batch2 = [preprocess_image(file, False) for file in src_files_shuffled2[batch_start:batch_end]]
-                target_batch = [preprocess_image(file, False) for file in target_files_shuffled[batch_start:batch_end]]
+                src_batch1 = [preprocess_image(file) for file in src_files_shuffled1[batch_start:batch_end]]
+                src_batch2 = [preprocess_image(file) for file in src_files_shuffled2[batch_start:batch_end]]
+                target_batch = [preprocess_image(file) for file in target_files_shuffled[batch_start:batch_end]]
                 yield np.array(src_batch1), np.array(src_batch2), np.array(target_batch)
     return generator, num_files
 

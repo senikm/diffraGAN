@@ -52,6 +52,12 @@ python test.py --model_path 'path/to/model.h5' \
 
 Please note that the current model has been trained on assymetric proteins up to 40 kDa and has limited capabilities. This repository will continue to serve as the main source for ongoing development related to the DiffraGAN. It will include future updates and model changes, ensuring that improvements and advancements are shared with the community.
 
+## To-do list
+
+- [ ] Denoising layer.
+- [ ] Better integration of diffraction data.
+- [ ] Wide range of training data and simulation parameters.
+
 
 ## Citation
 
