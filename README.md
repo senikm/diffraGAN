@@ -30,11 +30,11 @@ Ensure you have Python and the necessary packages installed, including TensorFlo
 
 ## Downloading pretrained weights and test data
 
-We are currently training the next version of the DiffraGAN which will be served through Hugging Face. Meanwhile, you can download pretrained weights of the smaller model and test data required to run the model from the following links:
+We are currently training the next version of the DiffraGAN which will be served through Hugging Face. Meanwhile, you can download pretrained weights of the smaller model and test data required to run the model from the following link:
 
-- **Pretrained weights and test data**: [Download pretrained weights and test data](https://drive.google.com/drive/folders/1DthFnK07dIKVrFCZB8QUSnGJPoJ6BRrI?usp=sharing)
+- **Pretrained weights and test data**: [Download pretrained weights and test data](https://huggingface.co/Senikm/diffragan)
 
-Please note that the current model has been trained on assymetric proteins up to 40 kDa and has limited capabilities. After downloading, please ensure that you extract the files.
+Please note,  that the current model has been trained on a small set of assymetric proteins up to 40 kDa and has limited capabilities. After downloading, please ensure that you extract the files.
 
 ## Usage
 
